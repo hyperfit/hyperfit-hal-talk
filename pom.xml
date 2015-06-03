@@ -10,6 +10,12 @@
 
     <repositories>
         <repository>
+            <id>remote</id>
+            <name>remote-repos</name>
+            <url>http://artifactory/remote-repos</url>
+        </repository>
+
+        <repository>
             <id>bbcom-snapshots</id>
             <name>bbcom-snapshots</name>
             <url>http://artifactory/local-repos</url>
@@ -29,14 +35,21 @@
         <dependency>
             <groupId>org.hyperfit</groupId>
             <artifactId>hyperfit</artifactId>
-            <version>1.6.3</version>
+            <version>1.7.0-SNAPSHOT</version>
         </dependency>
 
-        <!-- the HAL content type plugin -->
+        <!-- HAL talk uses HAL, so we need the HAL content type plugin -->
         <dependency>
             <groupId>org.hyperfit</groupId>
             <artifactId>hyperfit-hal</artifactId>
-            <version>1.6.3</version>
+            <version>1.7.0-SNAPSHOT</version>
+        </dependency>
+
+        <!-- HAL talk uses HTTPS so we need a hyperfit http client implementation -->
+        <dependency>
+            <groupId>org.hyperfit</groupId>
+            <artifactId>hyperfit-okhttp2-client</artifactId>
+            <version>1.7.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
 
