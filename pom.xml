@@ -24,4 +24,20 @@
 
     </repositories>
 
+    <dependencies>
+        <!-- The main hyperfit library -->
+        <dependency>
+            <groupId>org.hyperfit</groupId>
+            <artifactId>hyperfit</artifactId>
+            <version>1.6.3</version>
+        </dependency>
+
+        <!-- the HAL content type plugin -->
+        <dependency>
+            <groupId>org.hyperfit</groupId>
+            <artifactId>hyperfit-hal</artifactId>
+            <version>1.6.3</version>
+        </dependency>
+    </dependencies>
+
 </project>
