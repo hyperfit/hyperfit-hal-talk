@@ -11,7 +11,9 @@ public class ContractConstants {
     public static final String REL_USERS = "ht:users";
 
     public static final String REL_LATEST_POSTS = "ht:latest-posts";
+
     public static final String REL_POST = "ht:post";
+    public static final String REL_POSTS = "ht:posts";
 
     public static final String REL_AUTHOR = "ht:author";
 
