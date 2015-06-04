@@ -7,6 +7,8 @@ package com.bodybuilding.haltalk;
 public class ContractConstants {
     public static final String rootURL = "https://haltalk.herokuapp.com/";
 
+    public static final String REL_USERS = "ht:users";
+
     public static final String DATA_FIELD_ROOT_WELCOME = "welcome";
     public static final String DATA_FIELD_ROOT_HINT_1 = "hint_1";
     public static final String DATA_FIELD_ROOT_HINT_2 = "hint_2";
