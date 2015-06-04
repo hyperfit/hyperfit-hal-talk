@@ -13,4 +13,7 @@ public interface Post extends HyperResource {
 
     @Data(ContractConstants.DATA_FIELD_POST_CREATED_AT)
     String getCreated();
+
+    @Link(ContractConstants.REL_AUTHOR)
+    HyperLink getAuthorLink();
 }

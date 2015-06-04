@@ -25,7 +25,7 @@ public class PostsIntegrationTest {
 
 
         for(Post post : posts.posts()){
-            System.out.println(post.getContent() + " @ " + post.getCreated());
+            System.out.println(post.getAuthorLink().getTitle() + " posted " + post.getContent() + " @ " + post.getCreated());
         }
 
 

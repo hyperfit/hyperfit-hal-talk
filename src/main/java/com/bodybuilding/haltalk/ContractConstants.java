@@ -13,6 +13,7 @@ public class ContractConstants {
     public static final String REL_LATEST_POSTS = "ht:latest-posts";
     public static final String REL_POST = "ht:post";
 
+    public static final String REL_AUTHOR = "ht:author";
 
     public static final String DATA_FIELD_ROOT_WELCOME = "welcome";
     public static final String DATA_FIELD_ROOT_HINT_1 = "hint_1";
@@ -24,5 +25,7 @@ public class ContractConstants {
 
     public static final String DATA_FIELD_POST_CONTENT = "content";
     public static final String DATA_FIELD_POST_CREATED_AT = "created_at";
+
+
 
 }
