@@ -8,5 +8,10 @@ public class ContractConstants {
     public static final String rootURL = "https://haltalk.herokuapp.com/";
 
     public static final String DATA_FIELD_ROOT_WELCOME = "welcome";
+    public static final String DATA_FIELD_ROOT_HINT_1 = "hint_1";
+    public static final String DATA_FIELD_ROOT_HINT_2 = "hint_2";
+    public static final String DATA_FIELD_ROOT_HINT_3 = "hint_3";
+    public static final String DATA_FIELD_ROOT_HINT_4 = "hint_4";
+    public static final String DATA_FIELD_ROOT_HINT_5 = "hint_5";
 
 }
