@@ -22,4 +22,7 @@ public interface Post extends HyperResource {
 
     @Link(ContractConstants.REL_IN_REPLY_TO)
     boolean isReply();
+
+    @Link(ContractConstants.REL_IN_REPLY_TO)
+    Post postRepliedTo();
 }

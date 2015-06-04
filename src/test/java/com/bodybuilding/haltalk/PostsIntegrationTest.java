@@ -90,4 +90,26 @@ public class PostsIntegrationTest {
 
     }
 
+
+    @Test
+    public void testMakeThreadFromReplies() {
+
+        Root root = Helpers.fetchRoot();
+
+        //No more need to specify reflection class<t> stuff!
+        Post[] latestPosts = root.latestPosts().posts();
+
+        for(Post post : latestPosts){
+            if(post.isReply()){
+                System.out.println("\n\nThread: ");
+                Post originalPost = post.postRepliedTo();
+                System.out.println(originalPost.getAuthorLink().getTitle() + " posted " + originalPost.getContent() + " @ " + originalPost.getCreated());
+                System.out.println(post.getAuthorLink().getTitle() + " replied " + post.getContent() + " @ " + post.getCreated());
+            }
+
+        }
+
+
+    }
+
 }
