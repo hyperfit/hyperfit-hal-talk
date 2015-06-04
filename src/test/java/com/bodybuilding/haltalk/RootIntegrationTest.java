@@ -30,11 +30,7 @@ public class RootIntegrationTest {
 
     @Test
     public void testRootRetrieval() {
-        HyperfitProcessor processor = new HyperfitProcessor.Builder()
-        .addContentTypeHandler(
-            new HalJsonContentTypeHandler(),
-            new ContentType("application", "json")
-        )
+        HyperfitProcessor processor = HALTalkProcessor.builder()
         .hyperClient(new OkHttp2HyperClient(Helpers.allTrustingOkHttpClient()))
         .build();
 
@@ -57,36 +53,11 @@ public class RootIntegrationTest {
     }
 
 
-    @Test
-    public void testUserRetrieval() {
-        HyperfitProcessor processor = HALTalkProcessor.builder()
-        .hyperClient(new OkHttp2HyperClient(Helpers.allTrustingOkHttpClient()))
-        .build();
 
-
-        HyperResource resource = processor.processRequest(HyperResource.class, ContractConstants.rootURL);
-
-        RequestBuilder usersRequest = resource.getLink(ContractConstants.REL_USERS).toRequestBuilder();
-
-        HyperResource usersResource = processor.processRequest(HyperResource.class, usersRequest);
-
-
-
-        System.out.println("\nLinks:");
-        for(org.hyperfit.resource.controls.link.HyperLink link : usersResource.getLinks()){
-            System.out.println(link.getRel() + " => " + link.getHref());
-        }
-
-
-    }
 
     @Test
     public void testRootRetrievalWithInterface() {
-        HyperfitProcessor processor = new HyperfitProcessor.Builder()
-        .addContentTypeHandler(
-            new HalJsonContentTypeHandler(),
-            new ContentType("application", "json")
-        )
+        HyperfitProcessor processor = HALTalkProcessor.builder()
         .hyperClient(new OkHttp2HyperClient(Helpers.allTrustingOkHttpClient()))
         .build();
 
@@ -110,6 +81,26 @@ public class RootIntegrationTest {
     }
 
 
+    @Test
+    public void testUserRetrieval() {
+        HyperfitProcessor processor = HALTalkProcessor.builder()
+        .hyperClient(new OkHttp2HyperClient(Helpers.allTrustingOkHttpClient()))
+        .build();
+
+
+        Root resource = processor.processRequest(Root.class, ContractConstants.rootURL);
+
+        RequestBuilder usersRequest = resource.getLink(ContractConstants.REL_USERS).toRequestBuilder();
+
+        HyperResource usersResource = processor.processRequest(HyperResource.class, usersRequest);
+
+
+        System.out.println("\nLinks:");
+        for(org.hyperfit.resource.controls.link.HyperLink link : usersResource.getLinks()){
+            System.out.println(link.getRel() + " => " + link.getHref());
+        }
 
 
     }
+
+}
