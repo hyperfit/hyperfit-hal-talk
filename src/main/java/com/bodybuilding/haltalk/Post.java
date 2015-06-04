@@ -16,4 +16,7 @@ public interface Post extends HyperResource {
 
     @Link(ContractConstants.REL_AUTHOR)
     HyperLink getAuthorLink();
+
+    @Link(ContractConstants.REL_AUTHOR)
+    Author author();
 }
