@@ -17,6 +17,8 @@ public class ContractConstants {
 
     public static final String REL_AUTHOR = "ht:author";
 
+    public static final String REL_ME = "ht:me";
+
     public static final String REL_IN_REPLY_TO = "ht:in-reply-to";
 
     public static final String DATA_FIELD_ROOT_WELCOME = "welcome";
