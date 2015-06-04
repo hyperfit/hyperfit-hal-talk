@@ -31,4 +31,8 @@ public interface Root extends HyperResource {
     @Link(ContractConstants.REL_USERS)
     Users users();
 
+
+    @Link(ContractConstants.REL_LATEST_POSTS)
+    Posts latestPosts();
+
 }
