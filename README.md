@@ -1,6 +1,8 @@
 # hyperfit-hal-talk
 The purpose of this project is to demonstrate using Hyperfit to consume HAL Talk as a step by step guide.  Master contains the complete working example.  There are branches for each step & closed pull requests which show diffs about what was done for the step.  Most of the examples are implemented as test cases to simplify running within an IDE.
 
+Some familiarity with HAL is advised, but not required.
+
 This project consumes the hyper resources of the haltalk RESTful application hosted at http://haltalk.herokuapp.com
 
 # 01 - Dependencies
@@ -283,5 +285,33 @@ Which is a pretty powerful abstraction away from all the controls, requests, res
 
 At this point it's important to bring up a rather important paper: [a note on distribute computing](http://www.eecs.harvard.edu/~waldo/Readings/waldo-94.pdf).  If you are unfamiliar it details how hiding the fact that a method may require requests distributed over a network form a developer can lead to very poor implementation that have disastorous performance.  Working only with Resource Interfaces makes it so the requests to the remote service are generally hidden from the user.  As such it's very important to indicate to any developers that a method call may incur network round trips.  At bbcom we settled into a pattern of prefixing method with get whenever we can guarantee that the execution will be done locally in memory with no network i/o.  Methods not prefixed with get *may* require network i/o and developers should work with those calls as they would any other network i/o based call.
 
-# 11 - 
-[Branch](http://github.body.prod/hyperfit/hyperfit-hal-talk/tree/11-) & [Pull Request](http://github.body.prod/hyperfit/hyperfit-hal-talk/pull/11/files)
+# 11 - Retrieving Embedded Resources
+[Branch](http://github.body.prod/hyperfit/hyperfit-hal-talk/tree/11-embedded-resources) & [Pull Request](http://github.body.prod/hyperfit/hyperfit-hal-talk/pull/11/files)
+
+One of the greatest features of the HAL+JSON is the embedded resource hypermedia control.  This functions sort of like a prefetch where a link control is automatically executed and included in the response in effort to reduce the number of round trips the client need make.  Hyperfit supports HAL's embedded resource control natively.
+
+Since an embedded resource is really just the prefetched execution of a link control Hyperfit provides access to the embedded resource by executing the link control.  The logic is very simple, before making the request for a link control, check if the control has already been prefetched and if so, return that!
+
+In the haltalk application we see the embedded resource control in use when retrieving the latest posts via the ht:latest-post relationship from the root resource.  You can see this in action at https://haltalk.herokuapp.com/explorer/browser.html#/posts/latest where the resources of the ht:post relationship are embedded.
+
+```
+"_embedded": {
+  "ht:post": [
+    {
+      "_links": {
+        "self": {
+          "href": "/posts/5179ada1e744480002000002"
+        },
+        "ht:author": {
+          "href": "/users/drdamour",
+          "title": "DaMour"
+        }
+      },
+      "content": "damour is posting!",
+      "created_at": "2013-04-25T22:26:41+00:00"
+    },
+    ...
+  ]
+}
+```
+
