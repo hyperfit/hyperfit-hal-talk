@@ -103,4 +103,26 @@ public class RootIntegrationTest {
 
     }
 
+    @Test
+    public void testUserRetrievalThroughInterfaceLink() {
+        HyperfitProcessor processor = HALTalkProcessor.builder()
+        .hyperClient(new OkHttp2HyperClient(Helpers.allTrustingOkHttpClient()))
+        .build();
+
+
+        Root resource = processor.processRequest(Root.class, ContractConstants.rootURL);
+
+        RequestBuilder usersRequest = resource.getUsersLink().toRequestBuilder();
+
+        HyperResource usersResource = processor.processRequest(HyperResource.class, usersRequest);
+
+
+        System.out.println("\nLinks:");
+        for(org.hyperfit.resource.controls.link.HyperLink link : usersResource.getLinks()){
+            System.out.println(link.getRel() + " => " + link.getHref());
+        }
+
+
+    }
+
 }
