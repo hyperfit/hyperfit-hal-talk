@@ -226,13 +226,62 @@ for(org.hyperfit.resource.controls.link.HyperLink link : usersResource.getLinks(
   System.out.println(link.getRel() + " => " + link.getHref());
 }
 ```
-In this example the root is fetched, the ht:users link control from the root resource is accessed, and then followed to a new hyper resource that has all of it's links iterated over and ouput.  Missing is any direct reference to the HyperfitProcessor itself, but it's still there doing all the work!
+In this example the root is fetched, the ht:users link control from the root resource is accessed, and then followed to a new hyper resource that has all of it's links iterated over and ouput.  Missing is any direct reference to the HyperfitProcessor itself, but it's still there doing all the hard work!
 
 
-# 09 - 
+# 09 - Creating a Users resource interface
 [Branch](http://github.body.prod/hyperfit/hyperfit-hal-talk/tree/09-users-resource-interface) & [Pull Request](http://github.body.prod/hyperfit/hyperfit-hal-talk/pull/9/files)
 
+The next step on the path to working only with Resource Interfaces is to build a Resource interface for the resoruce returned when following the ht:users link relationship instead of working with the generic HyperResource interface.
+
+Choosing what to name your HyperResoruces can be tricky.  They don't have to follow the exact same conventions of the RESTful application you are consuming.  In this case we are building an interface for the resource browseable at https://haltalk.herokuapp.com/explorer/browser.html#/users and after a brief inspection it is pretty clear this resource contains only a bunch of ```ht:user``` link relationships to individual user resources.  As such we'll name this the users resource interface and include the ability to retrieve the collection of ```ht:user``` links:
+
+```
+public interface Users extends HyperResource {
+  
+  @Link(ContractConstants.REL_USER)
+  HyperLink[] getUserLinks();
+}
+```
+It's important to note that this resource interface, like all resource interfaces, must extend the HyperResource interface.  Another important convention introduced in this interface is the ability to return an array of HyperLink instances with the ht:user relationship instead of a single link as we had done previously.
+
+The test applcation code uses the returned HyperLink array when iterating over all of the links:
+```
+Root root = Helpers.fetchRoot();
+Users usersResource = root.getUsersLink().follow(Users.class);
+
+System.out.println("\nLinks:");
+for(org.hyperfit.resource.controls.link.HyperLink link : usersResource.getUserLinks()){
+  System.out.println(link.getRel() + "(" + link.getTitle()  + ") => " + link.getHref());
+}
+```
+Other things to note is that the param used in the follow() method is now the specific Users Resource Interface which has the getUserLinks method that is used to iterate with.  Also notice that each link has a relationship, title, and href accessory.
 
 
-# 10 - 
-[Branch](http://github.body.prod/hyperfit/hyperfit-hal-talk/tree/10-) & [Pull Request](http://github.body.prod/hyperfit/hyperfit-hal-talk/pull/10/files)
+# 10 - Using only Resource Interfaces
+[Branch](http://github.body.prod/hyperfit/hyperfit-hal-talk/tree/10-resource-via-method) & [Pull Request](http://github.body.prod/hyperfit/hyperfit-hal-talk/pull/10/files)
+
+The final step on our path to working with only Resource Interfaces is to remove links entirely.  Hyperfit provides this capability by adding a @Link annotated method to a Resource Interface that returns an interface that extends HyperResource like:
+```
+@Link(ContractConstants.REL_USERS)
+Users users();
+```
+
+Calling this code executes the link contorl identified by the REL_USERS relationship and returns the result as a Users resource.  The backing implementation retrieves the given link and calls it's follows method (which in turn create a request that is passed to the HyperfitProcessor).  At this point the application test code works only with Resource Interfaces:
+```
+Root root = Helpers.fetchRoot();
+
+//No more need to specify reflection class<t> stuff!
+Users usersResource = root.users();
+
+System.out.println("\nLinks:");
+for(org.hyperfit.resource.controls.link.HyperLink link : usersResource.getUserLinks()){
+  System.out.println(link.getRel() + "(" + link.getTitle()  + ") => " + link.getHref());
+}
+```
+Which is a pretty powerful abstraction away from all the controls, requests, responses, and media types that are inherent to working with a service.
+
+At this point it's important to bring up a rather important paper: [a note on distribute computing](http://www.eecs.harvard.edu/~waldo/Readings/waldo-94.pdf).  If you are unfamiliar it details how hiding the fact that a method may require requests distributed over a network form a developer can lead to very poor implementation that have disastorous performance.  Working only with Resource Interfaces makes it so the requests to the remote service are generally hidden from the user.  As such it's very important to indicate to any developers that a method call may incur network round trips.  At bbcom we settled into a pattern of prefixing method with get whenever we can guarantee that the execution will be done locally in memory with no network i/o.  Methods not prefixed with get *may* require network i/o and developers should work with those calls as they would any other network i/o based call.
+
+# 11 - 
+[Branch](http://github.body.prod/hyperfit/hyperfit-hal-talk/tree/11-) & [Pull Request](http://github.body.prod/hyperfit/hyperfit-hal-talk/pull/11/files)
