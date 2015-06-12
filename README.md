@@ -315,3 +315,20 @@ In the haltalk application we see the embedded resource control in use when retr
 }
 ```
 
+# 12 - Adding Author to Post
+[Branch](http://github.body.prod/hyperfit/hyperfit-hal-talk/tree/12-adding-author-to-post) & [Pull Request](http://github.body.prod/hyperfit/hyperfit-hal-talk/pull/12/files)
+
+# 13 - Nav to Author Resource
+[Branch](http://github.body.prod/hyperfit/hyperfit-hal-talk/tree/13-nav-to-author) & [Pull Request](http://github.body.prod/hyperfit/hyperfit-hal-talk/pull/13/files)
+
+# 14 - All Posts of Last Poster
+[Branch](http://github.body.prod/hyperfit/hyperfit-hal-talk/tree/14-all-posts-of-last-poster) & [Pull Request](http://github.body.prod/hyperfit/hyperfit-hal-talk/pull/14/files)
+
+# 15 - Testing for link control presence
+[Branch](http://github.body.prod/hyperfit/hyperfit-hal-talk/tree/15-testing-link-presence) & [Pull Request](http://github.body.prod/hyperfit/hyperfit-hal-talk/pull/15/files)
+
+# 16 - Making a Thread with Replies
+[Branch](http://github.body.prod/hyperfit/hyperfit-hal-talk/tree/16-making-a-thread-with-replies) & [Pull Request](http://github.body.prod/hyperfit/hyperfit-hal-talk/pull/16/files)
+
+# 17 - Templated Links and Params
+[Branch](http://github.body.prod/hyperfit/hyperfit-hal-talk/tree/17-params) & [Pull Request](http://github.body.prod/hyperfit/hyperfit-hal-talk/pull/17/files)
