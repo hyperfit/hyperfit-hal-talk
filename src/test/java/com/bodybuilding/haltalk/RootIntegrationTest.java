@@ -52,6 +52,35 @@ public class RootIntegrationTest {
 
     }
 
+    @Test
+    public void testRootRetrievalWithInterface() {
+        HyperfitProcessor processor = new HyperfitProcessor.Builder()
+        .addContentTypeHandler(
+            new HalJsonContentTypeHandler(),
+            new ContentType("application", "json")
+        )
+        .hyperClient(new OkHttp2HyperClient(Helpers.allTrustingOkHttpClient()))
+        .build();
+
+
+        Root resource = processor.processRequest(Root.class, ContractConstants.rootURL);
+
+        System.out.println(resource.toString());
+
+        System.out.println("\nLinks:");
+        for(org.hyperfit.resource.controls.link.HyperLink link : resource.getLinks()){
+            System.out.println(link.getRel() + " => " + link.getHref());
+        }
+
+        System.out.println("\nData:");
+        System.out.println("Welcome: " + resource.getWelcome());
+        System.out.println("Hint 1: " + resource.getHint1());
+        System.out.println("Hint 2: " + resource.getHint2());
+        System.out.println("Hint 3: " + resource.getHint3());
+        System.out.println("Hint 4: " + resource.getHint4());
+        System.out.println("Hint 5: " + resource.getHint5());
+    }
+
 
 
 
