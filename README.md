@@ -171,7 +171,30 @@ System.out.println("Hint 5: " + resource.getHint5());
 Here we've used a custom domain specific Resource Interface that acts a lot like a POJO.  This is certainly cool, but there's a LOT of different technologies out there that can take a URL or a string of JSON and turn it into a POJO to be used rather easily, if this is all that Hyperfit did it still wouldn't useful.
 
 # 06 - Navigating to users
-[Branch](http://github.body.prod/hyperfit/hyperfit-hal-talk/tree/06-) & [Pull Request](http://github.body.prod/hyperfit/hyperfit-hal-talk/pull/6/files)
+[Branch](http://github.body.prod/hyperfit/hyperfit-hal-talk/tree/06-navigating-to-users) & [Pull Request](http://github.body.prod/hyperfit/hyperfit-hal-talk/pull/6/files)
+
+What makes an application RESTful is that it provides Hyper Resources understandable by the client that contain both data and hypermedia controls.  We've seen how to make the Hyperfit client understand Hyper Resources via content type handlers and we've seen Hyperfit allow access to the data of a resource.  What is left is accessing and executing the hypermedia controls offered by the hyper resource.
+
+Hypermedia controls present state transitions available to the client.  One of the most common and simple hypermedia control is the link.  It represents a state transition from one resource to another and is identified by the relationship between the two resources the link represents.  These relationships are very stable within a RESTful application and changing or removing a relationship would be a backwards incompatible modification, as such it makes a lot of sense to store the relationships in the ContractConstants class.
+
+The root resource of the haltalk application has provides a few links, which we iterated over in a previous step.  The one we are going to execute is the navigation to the users resource.  This link has the ```ht:users``` relationship so that's the one we'll add to the ContractConstants class as ```REL_USERS```.
+
+The logic pattner for executing a control in Hyperfit is resource -> control -> request -> resource.  We see this in action with the following code:
+```
+Root resource = processor.processRequest(Root.class, ContractConstants.rootURL);
+
+RequestBuilder usersRequest = resource.getLink(ContractConstants.REL_USERS).toRequestBuilder();
+
+HyperResource usersResource = processor.processRequest(HyperResource.class, usersRequest);
+
+System.out.println("\nLinks:");
+  for(org.hyperfit.resource.controls.link.HyperLink link : usersResource.getLinks()){
+    System.out.println(link.getRel() + " => " + link.getHref());
+}
+```
+Here we see a retrieval of the root resource and then a retrieval from that resource of the link hypermedia control identifed by the REL_USERS (ht:users) relationship.  This link is then converted into a RequestBuilder which is then processed via the HyperfitProcessor into a resulting HyperResource, very similar to the way we originally retrieved the Root resource just as a HyperResource.
+
+
 
 # 07 - 
 [Branch](http://github.body.prod/hyperfit/hyperfit-hal-talk/tree/07-) & [Pull Request](http://github.body.prod/hyperfit/hyperfit-hal-talk/pull/7/files)
