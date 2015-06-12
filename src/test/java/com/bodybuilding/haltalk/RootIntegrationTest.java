@@ -141,4 +141,20 @@ public class RootIntegrationTest {
 
     }
 
+
+    @Test
+    public void testUserRetrievalThroughLinkFollowReturningResourceInterface() {
+        //No longer need a reference to the processor!
+        Root root = Helpers.fetchRoot();
+
+        Users usersResource = root.getUsersLink().follow(Users.class);
+
+        System.out.println("\nLinks:");
+        for(org.hyperfit.resource.controls.link.HyperLink link : usersResource.getUserLinks()){
+            System.out.println(link.getRel() + "(" + link.getTitle()  + ") => " + link.getHref());
+        }
+
+
+    }
+
 }
