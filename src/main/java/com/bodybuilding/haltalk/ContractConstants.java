@@ -26,6 +26,8 @@ public class ContractConstants {
     public static final String DATA_FIELD_POST_CONTENT = "content";
     public static final String DATA_FIELD_POST_CREATED_AT = "created_at";
 
-
+    public static final String DATA_FIELD_AUTHOR_USERNAME = "username";
+    public static final String DATA_FIELD_AUTHOR_BIO = "bio";
+    public static final String DATA_FIELD_AUTHOR_REAL_NAME = "real_name";
 
 }

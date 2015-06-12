@@ -31,4 +31,23 @@ public class PostsIntegrationTest {
 
     }
 
+
+    @Test
+    public void testRetrieveLatestPostsWithAuthorData() {
+
+        Root root = Helpers.fetchRoot();
+
+        //No more need to specify reflection class<t> stuff!
+        Posts posts = root.latestPosts();
+
+
+        for(Post post : posts.posts()){
+            Author author = post.author();//Network call!
+
+            System.out.println(author.getRealName() + "[" + author.getUsername() + "]" + " posted " + post.getContent() + " @ " + post.getCreated());
+        }
+
+
+    }
+
 }
