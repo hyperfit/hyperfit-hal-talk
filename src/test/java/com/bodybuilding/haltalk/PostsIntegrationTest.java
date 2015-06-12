@@ -71,4 +71,23 @@ public class PostsIntegrationTest {
 
     }
 
+
+    @Test
+    public void testFindPostsThatAreReplies() {
+
+        Root root = Helpers.fetchRoot();
+
+        //No more need to specify reflection class<t> stuff!
+        Post[] latestPosts = root.latestPosts().posts();
+
+        for(Post post : latestPosts){
+            if(post.isReply()){
+                System.out.println(post.getAuthorLink().getTitle() + " replied " + post.getContent() + " @ " + post.getCreated());
+            }
+
+        }
+
+
+    }
+
 }
