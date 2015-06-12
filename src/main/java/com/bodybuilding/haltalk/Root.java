@@ -2,6 +2,7 @@ package com.bodybuilding.haltalk;
 
 import org.hyperfit.annotation.Data;
 import org.hyperfit.annotation.Link;
+import org.hyperfit.annotation.Param;
 import org.hyperfit.resource.HyperResource;
 import org.hyperfit.resource.controls.link.HyperLink;
 
@@ -34,5 +35,8 @@ public interface Root extends HyperResource {
 
     @Link(ContractConstants.REL_LATEST_POSTS)
     Posts latestPosts();
+
+    @Link(ContractConstants.REL_ME)
+    Author user(@Param("name") String username);
 
 }
