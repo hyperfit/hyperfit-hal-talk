@@ -1,6 +1,10 @@
 package utils;
 
+import com.bodybuilding.haltalk.ContractConstants;
+import com.bodybuilding.haltalk.HALTalkProcessor;
+import com.bodybuilding.haltalk.Root;
 import com.squareup.okhttp.OkHttpClient;
+import org.hyperfit.HyperfitProcessor;
 import org.hyperfit.net.HyperClient;
 import org.hyperfit.net.okhttp2.OkHttp2HyperClient;
 
@@ -49,5 +53,14 @@ public class Helpers {
         } catch (Exception e){
             throw new RuntimeException(e);
         }
+    }
+
+    public static Root fetchRoot(){
+        HyperfitProcessor processor = HALTalkProcessor.builder()
+        .hyperClient(new OkHttp2HyperClient(Helpers.allTrustingOkHttpClient()))
+        .build();
+
+
+       return processor.processRequest(Root.class, ContractConstants.rootURL);
     }
 }
