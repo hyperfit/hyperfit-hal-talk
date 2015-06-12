@@ -28,4 +28,7 @@ public interface Root extends HyperResource {
     @Link(ContractConstants.REL_USERS)
     HyperLink getUsersLink();
 
+    @Link(ContractConstants.REL_USERS)
+    Users users();
+
 }
