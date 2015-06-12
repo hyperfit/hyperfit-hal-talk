@@ -50,4 +50,25 @@ public class PostsIntegrationTest {
 
     }
 
+
+    @Test
+    public void testRetrievePostsOfLast10Posters() {
+
+        Root root = Helpers.fetchRoot();
+
+        //No more need to specify reflection class<t> stuff!
+        Post[] latestPosts = root.latestPosts().posts();
+
+        for(int i = 0; i < 10; i++){
+            Author author = latestPosts[i].author();
+            System.out.println("\n\nPosts by " + author.getRealName() + "[" + author.getUsername() + "]");
+
+            for(Post post : author.posts().posts()){
+                System.out.println(post.getContent() + " @ " + post.getCreated());
+            }
+        }
+
+
+    }
+
 }
