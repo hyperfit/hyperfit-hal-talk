@@ -192,18 +192,47 @@ System.out.println("\nLinks:");
     System.out.println(link.getRel() + " => " + link.getHref());
 }
 ```
-Here we see a retrieval of the root resource and then a retrieval from that resource of the link hypermedia control identifed by the REL_USERS (ht:users) relationship.  This link is then converted into a RequestBuilder which is then processed via the HyperfitProcessor into a resulting HyperResource, very similar to the way we originally retrieved the Root resource just as a HyperResource.
+Here we see a retrieval of the root resource and then a retrieval from that resource of the link hypermedia control identifed by the REL_USERS (ht:users) relationship.  This link is then converted into a RequestBuilder which is then processed via the HyperfitProcessor into a resulting HyperResource, very similar to the way we originally retrieved the Root resource just as a HyperResource.  Finally all the links of this new resource are iterated over and ouput.  We've successfully executed a hypermedia control to transition state from the root resource to this new resource.
 
+Note: in this step you may notice that some of the boilerplate code that builds a HyperfitProcessor configured to work with the haltalk application has been moved to a helper function, we suggest this as a best practice and in general it usually useful to make the HyperfitProcessor instance a singleton.
 
+# 07 - Adding links to the Resource Interface 
+[Branch](http://github.body.prod/hyperfit/hyperfit-hal-talk/tree/07-users-link-through-inteface) & [Pull Request](http://github.body.prod/hyperfit/hyperfit-hal-talk/pull/7/files)
 
-# 07 - 
-[Branch](http://github.body.prod/hyperfit/hyperfit-hal-talk/tree/07-) & [Pull Request](http://github.body.prod/hyperfit/hyperfit-hal-talk/pull/7/files)
+In the previous step we transitions state from the root resource to another resource by using a link hypermedia control identified by it's relationship, specifically ht:users.  In this step we'll see that we can abstract the accessing of this link to the Root Resource Interface itself.  This is a small step to our ultimate goal of abstracting away links & requests and working directly with Resource Interfaces.
 
-# 08 - 
-[Branch](http://github.body.prod/hyperfit/hyperfit-hal-talk/tree/08-) & [Pull Request](http://github.body.prod/hyperfit/hyperfit-hal-talk/pull/8/files)
+The code is very simple.  Add this to a Root resource interface:
+```
+@Link(ContractConstants.REL_USERS)
+HyperLink getUsersLink();
+```
+
+Hyperfit's bakcing implementation to this method calls ```getLink(ContractConstants.REL_USERS)```, this is analagous to the @Data annotation.
+
+# 08 - Following a link control
+[Branch](http://github.body.prod/hyperfit/hyperfit-hal-talk/tree/08-users-resource-through-follows) & [Pull Request](http://github.body.prod/hyperfit/hyperfit-hal-talk/pull/8/files)
+
+The next step in our goal of working only with Resource Interfaces is to remove the transition from link to request.  By abstracting ourselves away from the request we no longer need a handle to the Hyperfit Processor!  Hyperfit still internally holds a reference but a client application need not pass the HyperfitProcessor instance to every method that wants to execute a resource's hyper media control.
+
+This is possible because of the ```follow()``` method of Hyperfit's HyperLink class.  follow turns the link into a request and sends the request through the Hyperfit processor in one combined sequence.  It's another small step, but a very important one.  Here's the code in action:
+```
+//No longer need a reference to the processor!
+Root root = Helpers.fetchRoot();
+
+HyperResource usersResource = root.getUsersLink().follow(HyperResource.class);
+
+System.out.println("\nLinks:");
+for(org.hyperfit.resource.controls.link.HyperLink link : usersResource.getLinks()){
+  System.out.println(link.getRel() + " => " + link.getHref());
+}
+```
+In this example the root is fetched, the ht:users link control from the root resource is accessed, and then followed to a new hyper resource that has all of it's links iterated over and ouput.  Missing is any direct reference to the HyperfitProcessor itself, but it's still there doing all the work!
+
 
 # 09 - 
-[Branch](http://github.body.prod/hyperfit/hyperfit-hal-talk/tree/09-) & [Pull Request](http://github.body.prod/hyperfit/hyperfit-hal-talk/pull/9/files)
+[Branch](http://github.body.prod/hyperfit/hyperfit-hal-talk/tree/09-users-resource-interface) & [Pull Request](http://github.body.prod/hyperfit/hyperfit-hal-talk/pull/9/files)
+
+
 
 # 10 - 
 [Branch](http://github.body.prod/hyperfit/hyperfit-hal-talk/tree/10-) & [Pull Request](http://github.body.prod/hyperfit/hyperfit-hal-talk/pull/10/files)
