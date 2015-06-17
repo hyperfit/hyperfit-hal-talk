@@ -327,6 +327,8 @@ In the haltalk application we see the embedded resource control in use when retr
 # 15 - Testing for link control presence
 [Branch](http://github.body.prod/hyperfit/hyperfit-hal-talk/tree/15-testing-link-presence) & [Pull Request](http://github.body.prod/hyperfit/hyperfit-hal-talk/pull/15/files)
 
+https://haltalk.herokuapp.com/explorer/browser.html#/posts/5040a741d33e370002000003
+
 # 16 - Making a Thread with Replies
 [Branch](http://github.body.prod/hyperfit/hyperfit-hal-talk/tree/16-making-a-thread-with-replies) & [Pull Request](http://github.body.prod/hyperfit/hyperfit-hal-talk/pull/16/files)
 
