@@ -6,7 +6,7 @@ Some familiarity with HAL is advised, but not required.
 This project consumes the hyper resources of the haltalk RESTful application hosted at http://haltalk.herokuapp.com
 
 # 01 - Dependencies
-[Branch](http://github.body.prod/hyperfit/hyperfit-hal-talk/tree/01-dependencies) & [Pull Request](http://github.body.prod/hyperfit/hyperfit-hal-talk/pull/1/files)
+[Branch](/../../tree/01-dependencies) & [Pull Request](/../../pull/1/files)
 
 To use hyperfit you must bring in the correct dependencies.  All projects must include the hyperfit-core.  From there, Hyperfit follows a plugin architecture at a minimum you will need a network client to issue requests and process responses and a handler for the content type the service uses.
 
@@ -20,7 +20,7 @@ Some transitive depenedencies are also now included in the project scope.  The o
 
 
 # 02 - Contract Constants
-[Branch](http://github.body.prod/hyperfit/hyperfit-hal-talk/tree/02-contract-constants) & [Pull Request](http://github.body.prod/hyperfit/hyperfit-hal-talk/pull/2/files)
+[Branch](/../../tree/02-contract-constants) & [Pull Request](/../../pull/2/files)
 
 RESTful application are based around certain contract constants that cannot change without breaking backwards compatibility.  Some example include the root URL of the application, link relationships, & data field names.  It is a Hyperfit best practice to store all these values in a single class of constants, usually named ContractConstants.  This allows developers to know if some change has broken backwards compatibility.  At bbcom we've found this convention to be extremely useful.
 
@@ -28,7 +28,7 @@ The first constant defiend by the contract of any RESTful application is it's ro
 
 
 # 03 - Root Retrieval
-[Branch](http://github.body.prod/hyperfit/hyperfit-hal-talk/tree/03-root-retrieval) & [Pull Request](http://github.body.prod/hyperfit/hyperfit-hal-talk/pull/3/files)
+[Branch](/../../tree/03-root-retrieval) & [Pull Request](/../../pull/3/files)
 
 The first step in your RESTful client is to retrieve the root resource.  All other interaction with the service starts by utilizing the controls of the root resource, so let's go retrieve it!  
 
@@ -65,7 +65,7 @@ org.hyperfit.exception.ResponseException: Response from [https://haltalk.herokua
 What happened?  We requested application/hal+json but actually received text/html.  The Hyperfit Processor has no idea how to handle this content type as no handler for it was registered.  But we have a more fundamental problem as the service is clearly not respecting our requests as constructed.   We'll dive into that in the next section.
 
 # 04 - Accept Header
-[Branch](http://github.body.prod/hyperfit/hyperfit-hal-talk/tree/04-accept-header) & [Pull Request](http://github.body.prod/hyperfit/hyperfit-hal-talk/pull/4/files)
+[Branch](/../../tree/04-accept-header) & [Pull Request](/../../pull/4/files)
 
 In the last step we were receiving a 406 response code.  This indicates that the service did not understand any of our Accept header values.  Using the HAL Browser interface and sniffing the requests that work it turns out that the haltalk application expects application/json as the requested representation mime type as opposed to application/hal+json.  This is the type of information that is generally available in the documentation and is a cross cutting concern, meaning it applies to all interactions with the service.
 
@@ -126,7 +126,7 @@ The first part of this code iterates over the hyperlink controls in the root res
 The second part of this code made use of the getPathAs method on HyperResource to retrieve the data identified by the *welcome* key which is referenced from the ContractConstants class.  The implementation of getPathAs is content type handler specific, for the HalJsonContentTypeHandler the implementation is almost competely dependent on Jackson deserialization.
 
 # 05 - Adding an interface for data retrieval
-[Branch](http://github.body.prod/hyperfit/hyperfit-hal-talk/tree/05-interface-for-data) & [Pull Request](http://github.body.prod/hyperfit/hyperfit-hal-talk/pull/5/files)
+[Branch](/../../tree/05-interface-for-data) & [Pull Request](/../../pull/5/files)
 
 You could certainly stop here and Hypefit would be useable, although not extremely valuable.  The getPathAs method is somewhat clunky and very raw.  Retrofit is so useful because it offers higher level abstraction of interfaces to developers, and Hyperfit has the same abstractions.  In this step we'll cover how to create a resource interface in an effort to make accessing the data of the root resouce very easy.
 
@@ -173,7 +173,7 @@ System.out.println("Hint 5: " + resource.getHint5());
 Here we've used a custom domain specific Resource Interface that acts a lot like a POJO.  This is certainly cool, but there's a LOT of different technologies out there that can take a URL or a string of JSON and turn it into a POJO to be used rather easily, if this is all that Hyperfit did it still wouldn't useful.
 
 # 06 - Navigating to users
-[Branch](http://github.body.prod/hyperfit/hyperfit-hal-talk/tree/06-navigating-to-users) & [Pull Request](http://github.body.prod/hyperfit/hyperfit-hal-talk/pull/6/files)
+[Branch](/../../tree/06-navigating-to-users) & [Pull Request](/../../pull/6/files)
 
 What makes an application RESTful is that it provides Hyper Resources understandable by the client that contain both data and hypermedia controls.  We've seen how to make the Hyperfit client understand Hyper Resources via content type handlers and we've seen Hyperfit allow access to the data of a resource.  What is left is accessing and executing the hypermedia controls offered by the hyper resource.
 
@@ -199,7 +199,7 @@ Here we see a retrieval of the root resource and then a retrieval from that reso
 Note: in this step you may notice that some of the boilerplate code that builds a HyperfitProcessor configured to work with the haltalk application has been moved to a helper function, we suggest this as a best practice and in general it usually useful to make the HyperfitProcessor instance a singleton.
 
 # 07 - Adding links to the Resource Interface 
-[Branch](http://github.body.prod/hyperfit/hyperfit-hal-talk/tree/07-users-link-through-inteface) & [Pull Request](http://github.body.prod/hyperfit/hyperfit-hal-talk/pull/7/files)
+[Branch](/../../tree/07-users-link-through-inteface) & [Pull Request](/../../pull/7/files)
 
 In the previous step we transitions state from the root resource to another resource by using a link hypermedia control identified by it's relationship, specifically ht:users.  In this step we'll see that we can abstract the accessing of this link to the Root Resource Interface itself.  This is a small step to our ultimate goal of abstracting away links & requests and working directly with Resource Interfaces.
 
@@ -212,7 +212,7 @@ HyperLink getUsersLink();
 Hyperfit's bakcing implementation to this method calls ```getLink(ContractConstants.REL_USERS)```, this is analagous to the @Data annotation.
 
 # 08 - Following a link control
-[Branch](http://github.body.prod/hyperfit/hyperfit-hal-talk/tree/08-users-resource-through-follows) & [Pull Request](http://github.body.prod/hyperfit/hyperfit-hal-talk/pull/8/files)
+[Branch](/../../tree/08-users-resource-through-follows) & [Pull Request](/../../pull/8/files)
 
 The next step in our goal of working only with Resource Interfaces is to remove the transition from link to request.  By abstracting ourselves away from the request we no longer need a handle to the Hyperfit Processor!  Hyperfit still internally holds a reference but a client application need not pass the HyperfitProcessor instance to every method that wants to execute a resource's hyper media control.
 
@@ -232,7 +232,7 @@ In this example the root is fetched, the ht:users link control from the root res
 
 
 # 09 - Creating a Users resource interface
-[Branch](http://github.body.prod/hyperfit/hyperfit-hal-talk/tree/09-users-resource-interface) & [Pull Request](http://github.body.prod/hyperfit/hyperfit-hal-talk/pull/9/files)
+[Branch](/../../tree/09-users-resource-interface) & [Pull Request](/../../pull/9/files)
 
 The next step on the path to working only with Resource Interfaces is to build a Resource interface for the resoruce returned when following the ht:users link relationship instead of working with the generic HyperResource interface.
 
@@ -261,7 +261,7 @@ Other things to note is that the param used in the follow() method is now the sp
 
 
 # 10 - Using only Resource Interfaces
-[Branch](http://github.body.prod/hyperfit/hyperfit-hal-talk/tree/10-resource-via-method) & [Pull Request](http://github.body.prod/hyperfit/hyperfit-hal-talk/pull/10/files)
+[Branch](/../../tree/10-resource-via-method) & [Pull Request](/../../pull/10/files)
 
 The final step on our path to working with only Resource Interfaces is to remove links entirely.  Hyperfit provides this capability by adding a @Link annotated method to a Resource Interface that returns an interface that extends HyperResource like:
 ```
@@ -286,7 +286,7 @@ Which is a pretty powerful abstraction away from all the controls, requests, res
 At this point it's important to bring up a rather important paper: [a note on distribute computing](http://www.eecs.harvard.edu/~waldo/Readings/waldo-94.pdf).  If you are unfamiliar it details how hiding the fact that a method may require requests distributed over a network form a developer can lead to very poor implementation that have disastorous performance.  Working only with Resource Interfaces makes it so the requests to the remote service are generally hidden from the user.  As such it's very important to indicate to any developers that a method call may incur network round trips.  At bbcom we settled into a pattern of prefixing method with get whenever we can guarantee that the execution will be done locally in memory with no network i/o.  Methods not prefixed with get *may* require network i/o and developers should work with those calls as they would any other network i/o based call.
 
 # 11 - Retrieving Embedded Resources
-[Branch](http://github.body.prod/hyperfit/hyperfit-hal-talk/tree/11-embedded-resources) & [Pull Request](http://github.body.prod/hyperfit/hyperfit-hal-talk/pull/11/files)
+[Branch](/../../tree/11-embedded-resources) & [Pull Request](/../../pull/11/files)
 
 One of the greatest features of the HAL+JSON is the embedded resource hypermedia control.  This functions sort of like a prefetch where a link control is automatically executed and included in the response in effort to reduce the number of round trips the client need make.  Hyperfit supports HAL's embedded resource control natively.
 
@@ -316,21 +316,21 @@ In the haltalk application we see the embedded resource control in use when retr
 ```
 
 # 12 - Adding Author to Post
-[Branch](http://github.body.prod/hyperfit/hyperfit-hal-talk/tree/12-adding-author-to-post) & [Pull Request](http://github.body.prod/hyperfit/hyperfit-hal-talk/pull/12/files)
+[Branch](/../../tree/12-adding-author-to-post) & [Pull Request](/../../pull/12/files)
 
 # 13 - Nav to Author Resource
-[Branch](http://github.body.prod/hyperfit/hyperfit-hal-talk/tree/13-nav-to-author) & [Pull Request](http://github.body.prod/hyperfit/hyperfit-hal-talk/pull/13/files)
+[Branch](/../../tree/13-nav-to-author) & [Pull Request](/../../pull/13/files)
 
 # 14 - All Posts of Last Poster
-[Branch](http://github.body.prod/hyperfit/hyperfit-hal-talk/tree/14-all-posts-of-last-poster) & [Pull Request](http://github.body.prod/hyperfit/hyperfit-hal-talk/pull/14/files)
+[Branch](/../../tree/14-all-posts-of-last-poster) & [Pull Request](/../../pull/14/files)
 
 # 15 - Testing for link control presence
-[Branch](http://github.body.prod/hyperfit/hyperfit-hal-talk/tree/15-testing-link-presence) & [Pull Request](http://github.body.prod/hyperfit/hyperfit-hal-talk/pull/15/files)
+[Branch](/../../tree/15-testing-link-presence) & [Pull Request](/../../pull/15/files)
 
 https://haltalk.herokuapp.com/explorer/browser.html#/posts/5040a741d33e370002000003
 
 # 16 - Making a Thread with Replies
-[Branch](http://github.body.prod/hyperfit/hyperfit-hal-talk/tree/16-making-a-thread-with-replies) & [Pull Request](http://github.body.prod/hyperfit/hyperfit-hal-talk/pull/16/files)
+[Branch](/../../tree/16-making-a-thread-with-replies) & [Pull Request](/../../pull/16/files)
 
 # 17 - Templated Links and Params
-[Branch](http://github.body.prod/hyperfit/hyperfit-hal-talk/tree/17-params) & [Pull Request](http://github.body.prod/hyperfit/hyperfit-hal-talk/pull/17/files)
+[Branch](/../../tree/17-params) & [Pull Request](/../../pull/17/files)
